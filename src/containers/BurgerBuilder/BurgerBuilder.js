@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Auxy from '../../hoc/Auxy';
+import Auxy from '../../hoc/Auxy/Auxy';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
@@ -67,12 +67,16 @@ class BurgerBuilder extends Component {
   };
 
   purchaseHandler = () => {
-    this.setState({purchasing: true})
-  }
+    this.setState({ purchasing: true });
+  };
 
   purchaseCancelHandler = () => {
-    this.setState({purchasing: false})
-  }
+    this.setState({ purchasing: false });
+  };
+
+  purchaseContinueHandler = () => {
+    alert('YOU CONTINUE!');
+  };
 
   render() {
     const disabledInfo = {
@@ -83,8 +87,16 @@ class BurgerBuilder extends Component {
     }
     return (
       <Auxy>
-        <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler} >
-          <OrderSummary ingredients={this.state.ingredients} />
+        <Modal
+          show={this.state.purchasing}
+          modalClosed={this.purchaseCancelHandler}
+        >
+          <OrderSummary
+            ingredients={this.state.ingredients}
+            price={this.state.totalPrice}
+            purchaseCancelled={this.purchaseCancelHandler}
+            purchaseContinueed={this.purchaseContinueHandler}
+          />
         </Modal>
         <Burger ingredients={this.state.ingredients} />
         <BuildControls
