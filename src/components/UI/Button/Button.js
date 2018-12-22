@@ -3,7 +3,7 @@ import classes from './Button.module.css';
 
 function button(props) {
   return (
-    <div>
+    <div style={{ display: "inline-block"}}>
       <button
         className={[classes.Button, classes[props.btnType]].join(' ')}
         onClick={props.clicked}
