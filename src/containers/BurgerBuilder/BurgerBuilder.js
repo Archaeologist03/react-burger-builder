@@ -9,7 +9,7 @@ import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import axios from '../../axios-orders';
-import * as actionTypes from '../../store/actions';
+import * as burgerBuilderActions from '../../store/actions/index';
 
 class BurgerBuilder extends Component {
   state = {
@@ -112,12 +112,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onIngredientAdded: ingName =>
-      dispatch({ type: actionTypes.ADD_INGREDIENT, ingredientName: ingName }),
+      dispatch(burgerBuilderActions.addIngredient(ingName)),
     onIngredientRemoved: ingName =>
-      dispatch({
-        type: actionTypes.REMOVE_INGREDIENT,
-        ingredientName: ingName,
-      }),
+      dispatch(burgerBuilderActions.removeIngredient(ingName)),
   };
 };
 
@@ -125,34 +122,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(withErrorHandler(BurgerBuilder, axios));
-
-// addIngredientHandler = type => {
-//   const oldCount = this.state.ingredients[type];
-//   const updatedCount = oldCount + 1;
-//   const updatedIngredients = {
-//     ...this.state.ingredients,
-//   };
-//   updatedIngredients[type] = updatedCount;
-//   const priceAddition = INGREDIENT_PRICES[type];
-//   const oldPrice = this.state.totalPrice;
-//   const newPrice = oldPrice + priceAddition;
-//   this.setState({ totalPrice: newPrice, ingredients: updatedIngredients });
-//   this.updatePurchaseState(updatedIngredients);
-// };
-
-// removeIngredientHandler = type => {
-//   const oldCount = this.state.ingredients[type];
-//   if (oldCount <= 0) {
-//     return;
-//   }
-//   const updatedCount = oldCount - 1;
-//   const updatedIngredients = {
-//     ...this.state.ingredients,
-//   };
-//   updatedIngredients[type] = updatedCount;
-//   const priceDeduction = INGREDIENT_PRICES[type];
-//   const oldPrice = this.state.totalPrice;
-//   const newPrice = oldPrice - priceDeduction;
-//   this.setState({ totalPrice: newPrice, ingredients: updatedIngredients });
-//   this.updatePurchaseState(updatedIngredients);
-// };
