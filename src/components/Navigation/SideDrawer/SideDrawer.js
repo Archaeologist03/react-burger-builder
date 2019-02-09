@@ -19,7 +19,7 @@ function SideDrawer(props) {
           <Logo />
         </div>
         <nav>
-          <NavigationItems />
+          <NavigationItems isAuthenticated={props.isAuth} />
         </nav>
       </div>
     </Auxy>
@@ -27,4 +27,3 @@ function SideDrawer(props) {
 }
 
 export default SideDrawer;
-

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
-import Spinner from '../../components/UI/Spinner/Spinner'
+import Spinner from '../../components/UI/Spinner/Spinner';
 import classes from './Auth.module.css';
 import * as actions from '../../store/actions/index';
 
@@ -118,20 +119,24 @@ export class Auth extends Component {
     ));
 
     if (this.props.loading) {
-      form = <Spinner />
+      form = <Spinner />;
     }
 
     let errorMessage = null;
 
     if (this.props.error) {
-      errorMessage = (
-        <p>{this.props.error.message}</p>
-      )
+      errorMessage = <p>{this.props.error.message}</p>;
+    }
+
+    let authRedirect = null;
+    if (this.props.isAuthenticated) {
+      authRedirect = <Redirect to="/" />;
     }
 
     return (
       <div className={classes.Auth}>
-      {errorMessage}
+        {authRedirect}
+        {errorMessage}
         <form onSubmit={this.submitHandler}>
           {form}
           <Button btnType="Success">SUBMIT</Button>
@@ -148,9 +153,9 @@ const mapStateToProps = state => {
   return {
     loading: state.auth.loading,
     error: state.auth.error,
-
-  }
-}
+    isAuthenticated: state.auth.token !== null,
+  };
+};
 const mapDispatchToProps = dispatch => {
   return {
     onAuth: (email, password, isSignup) =>
